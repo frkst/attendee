@@ -6,8 +6,8 @@ services:
     networks:
       - attendee_network
     environment:
-      - POSTGRES_HOST=${{ Postgres.DATABASE_URL }}
-      - REDIS_URL=${{ Redis.REDIS_URL }}
+      - POSTGRES_HOST=postgres.railway.internal
+      - REDIS_URL=redis://default:VgrCkFJwXRJpcgepHMbdlqSToGaCfvlu@trolley.proxy.rlwy.net:44671
       - DJANGO_SETTINGS_MODULE=attendee.settings
     command: ["/bin/bash", "-c", "/opt/bin/entrypoint.sh && celery -A attendee worker -l INFO"]
 
@@ -21,16 +21,16 @@ services:
       - "8000:8000"
     environment:
       - POSTGRES_HOST=${{ Postgres.DATABASE_URL }}
-      - REDIS_URL=${{ Redis.REDIS_URL }}
+      - REDIS_URL=redis://default:VgrCkFJwXRJpcgepHMbdlqSToGaCfvlu@trolley.proxy.rlwy.net:44671
       - DJANGO_SETTINGS_MODULE=attendee.settings
     command: python manage.py runserver 0.0.0.0:8000
 
   postgres:
     image: postgres:15.3-alpine
     environment:
-      POSTGRES_DB: attendee_development
-      POSTGRES_USER: attendee_development_user
-      POSTGRES_PASSWORD: attendee_development_user
+      POSTGRES_DB: railway
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: BApcjhAkVkwJNuaoUbacJcZjzOKvYisU
       PGDATA: /data/postgres
     volumes:
        - postgres:/data/postgres
