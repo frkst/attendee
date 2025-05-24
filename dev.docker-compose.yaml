@@ -7,7 +7,7 @@ services:
       - attendee_network
     environment:
       - POSTGRES_HOST=${{ Postgres.DATABASE_URL }}
-      - REDIS_URL=redis://redis:6379/5
+      - REDIS_URL=${{ Redis.REDIS_URL }}
       - DJANGO_SETTINGS_MODULE=attendee.settings.development
     command: ["/bin/bash", "-c", "/opt/bin/entrypoint.sh && celery -A attendee worker -l INFO"]
 
@@ -21,7 +21,7 @@ services:
       - "8000:8000"
     environment:
       - POSTGRES_HOST=${{ Postgres.DATABASE_URL }}
-      - REDIS_URL=redis://redis:6379/5
+      - REDIS_URL=${{ Redis.REDIS_URL }}
       - DJANGO_SETTINGS_MODULE=attendee.settings.development
     command: python manage.py runserver 0.0.0.0:8000
 
